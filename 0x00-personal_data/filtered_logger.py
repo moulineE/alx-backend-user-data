@@ -2,6 +2,8 @@
 """a function that returns the log message obfuscated"""
 import re
 import logging
+import os
+import mysql.connector
 from typing import List
 
 PII_FIELDS = ('name', 'email', 'phone', 'ssn', 'password')
@@ -51,3 +53,16 @@ def get_logger() -> logging.Logger:
     stream_handler.setFormatter(formatter)
     logger.addHandler(stream_handler)
     return logger
+
+
+def get_db() -> mysql.connector.connection.MySQLConnection:
+    """
+    function that returns a connector to the database
+    :return:
+    """
+    cnx = mysql.connector.connect(
+        user=os.getenv('PERSONAL_DATA_DB_USERNAME', 'root'),
+        password=os.getenv('PERSONAL_DATA_DB_PASSWORD', ''),
+        host=os.getenv('PERSONAL_DATA_DB_HOST', 'localhost'),
+        database=os.getenv('PERSONAL_DATA_DB_NAME'))
+    return cnx
