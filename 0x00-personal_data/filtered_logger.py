@@ -76,11 +76,11 @@ def main():
     cursor.execute("SELECT * FROM users;")
     logger = get_logger()
     fields = [field[0] for field in cursor.description]
-    print(fields)
     logs = ''
     for row in cursor:
         for field, log in zip(fields, row):
             logs += "{}={};".format(field, log)
+            logs += " "
         logger.info(logs)
     cursor.close()
     db.close()
