@@ -70,7 +70,11 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
 
 
 def main():
-    """"""
+    """
+    a main function that takes no arguments and retrieve all rows
+    in the users table and display each row under a filtered format
+    :return:
+    """
     db = get_db()
     cursor = db.cursor()
     cursor.execute("SELECT * FROM users;")
