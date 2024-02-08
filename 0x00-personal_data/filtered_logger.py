@@ -67,3 +67,24 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
         database=os.environ.get('PERSONAL_DATA_DB_NAME'),
         use_pure=True)
     return cnx
+
+
+def main():
+    """"""
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM users;")
+    logger = get_logger()
+    fields = [field[0] for field in cursor.description]
+    print(fields)
+    logs = ''
+    for row in cursor:
+        for field, log in zip(fields, row):
+            logs += "{}={};".format(field, log)
+        logger.info(logs)
+    cursor.close()
+    db.close()
+
+
+if __name__ == "__main__":
+    main()
