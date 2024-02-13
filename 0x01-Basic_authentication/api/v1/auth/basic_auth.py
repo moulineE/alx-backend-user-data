@@ -64,7 +64,7 @@ class BasicAuth(Auth):
         if decoded_base64_authorization_header:
             if type(decoded_base64_authorization_header) == str:
                 user_credentials = (decoded_base64_authorization_header.
-                                    split(':'))
+                                    split(':', 1))
                 if len(user_credentials) == 2:
                     return tuple(user_credentials)
         return None, None
