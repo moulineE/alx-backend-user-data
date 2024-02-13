@@ -29,7 +29,7 @@ class Auth:
         Returns:
 
         """
-        return False
+        return None
 
     def current_user(self, request=None) -> TypeVar('User'):
         """
