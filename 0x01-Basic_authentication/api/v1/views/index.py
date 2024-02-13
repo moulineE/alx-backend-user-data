@@ -30,3 +30,9 @@ def stats() -> str:
 def error_handler_tester() -> None:
     """error handler endpoint tester"""
     abort(401)
+
+
+@app_views.route('/forbidden/', strict_slashes=False)
+def forbidden_error_handler_tester() -> None:
+    """forbidden error handler endpoint tester"""
+    abort(403)
