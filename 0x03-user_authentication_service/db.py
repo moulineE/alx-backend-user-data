@@ -4,6 +4,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
+from sqlalchemy.exc import InvalidRequestError
+from sqlalchemy.orm.exc import NoResultFound
 
 from user import Base, User
 
@@ -48,3 +50,18 @@ class DB:
     def save(self):
         """Commit all changes of the current database session"""
         self._session.commit()
+
+    def find_user_by(self, **kwargs):
+        """
+        method that find user row by an arbitrary keyword arguments
+        :return:
+            first row found in the users table as filtered by the method’s
+            input arguments
+        """
+        try:
+            user = self._session.query(User).filter_by(**kwargs).one()
+        except NoResultFound:
+            raise NoResultFound()
+        except InvalidRequestError:
+            raise InvalidRequestError()
+        return user
