@@ -50,7 +50,11 @@ class DB:
 
     def save(self):
         """Commit all changes of the current database session"""
-        self._session.commit()
+        try:
+            self._session.commit()
+        except Exception as e:
+            self._session.rollback()
+            raise e
 
     def find_user_by(self, **kwargs) -> User:
         """
