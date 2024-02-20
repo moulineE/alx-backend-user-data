@@ -103,6 +103,8 @@ class Auth:
         """
         if reset_token is None or password is None:
             raise ValueError
+        if type(reset_token) is not str or type(password) is not str:
+            raise ValueError
         try:
             user = self._db.find_user_by(reset_token=reset_token)
             n_hashed_password = _hash_password(password)
