@@ -47,9 +47,9 @@ def logout():
     user = AUTH.get_user_from_session_id(sessionID)
     if user:
         AUTH.destroy_session(user.id)
-        redirect('/')
+        return redirect('/')
     else:
-        redirect('/', 403)
+        abort(403)
 
 
 if __name__ == "__main__":
