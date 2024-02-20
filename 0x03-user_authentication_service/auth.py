@@ -28,7 +28,7 @@ class Auth:
             user = self._db.add_user(email, hashed_pass)
             return user
 
-    def valid_login(self, email, password) -> bool:
+    def valid_login(self, email: str, password: str) -> bool:
         """
         method that the provided password matches the hashed password for
         a given user
@@ -45,6 +45,20 @@ class Auth:
         except NoResultFound:
             return False
 
+    def create_session(self, email: str) -> str:
+        """
+        method that create a new session id and assign it to a user
+        :param email:
+        :return:
+        """
+        try:
+            user = self._db.find_user_by(email=email)
+            session_id = _generate_uuid()
+            self._db.update_user(user.id, session_id=session_id)
+            return session_id
+        except NoResultFound:
+            return None
+
 
 def _hash_password(password: str) -> bytes:
     """
@@ -57,6 +71,6 @@ def _hash_password(password: str) -> bytes:
     return bcrypt.hashpw(password.encode(), bcrypt.gensalt())
 
 
-def _generate_uuid():
+def _generate_uuid() -> str:
     """function that generate & return a string representation of a UUID"""
     return str(uuid4())
