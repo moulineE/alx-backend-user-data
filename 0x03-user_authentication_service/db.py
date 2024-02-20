@@ -40,12 +40,8 @@ class DB:
         :return:
         """
         new_user = User(email=email, hashed_password=hashed_password)
-        try:
-            self.new(new_user)
-            self.save()
-        except Exception:
-            self._session.rollback()
-            raise
+        self.new(new_user)
+        self.save()
         return new_user
 
     def new(self, obj):
@@ -56,7 +52,7 @@ class DB:
         """Commit all changes of the current database session"""
         self._session.commit()
 
-    def find_user_by(self, **kwargs):
+    def find_user_by(self, **kwargs) -> User:
         """
         method that find user row by an arbitrary keyword arguments
         :return:
