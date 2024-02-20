@@ -13,7 +13,7 @@ class Auth:
     def __init__(self):
         self._db = DB()
 
-    def register_user(self, email: str, password: str):
+    def register_user(self, email: str, password: str) -> User:
         """
         method that register new users
         :param email:
