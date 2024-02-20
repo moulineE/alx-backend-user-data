@@ -40,8 +40,12 @@ class DB:
         :return:
         """
         new_user = User(email=email, hashed_password=hashed_password)
-        self.new(new_user)
-        self.save()
+        try:
+            self.new(new_user)
+            self.save()
+        except Exception:
+            self._session.rollback()
+            raise
         return new_user
 
     def new(self, obj):
