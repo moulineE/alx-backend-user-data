@@ -110,7 +110,6 @@ class Auth:
             return None
         except NoResultFound:
             raise ValueError
-        return None
 
 
 def _hash_password(password: str) -> bytes:
