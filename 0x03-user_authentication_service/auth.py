@@ -66,7 +66,7 @@ class Auth:
         except NoResultFound:
             raise ValueError('user id not found')
 
-    def get_user_from_session_id(self, session_id):
+    def get_user_from_session_id(self, session_id: str) -> User:
         """
         method that find a user by session_id
         :param session_id:
